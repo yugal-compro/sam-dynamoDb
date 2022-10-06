@@ -1,0 +1,30 @@
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs16.x
+    Timeout: 120
+    Handler: index.handler
+
+Resources:
+    CreateDynamoDbFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: functions/create-dynamodb/
+        Description: To Create an AWS DynamoDb table
+    GetItemFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: functions/get-item/
+        Description: To fetch a item from DynamoDb table
+    PutItemFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: functions/put-item/
+        Description: To add a item in DynamoDb table
+    UpdateItemFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: functions/update-item/
+        Description: To update a item in DynamoDb table          
+    
