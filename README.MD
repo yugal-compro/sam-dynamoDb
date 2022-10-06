@@ -6,7 +6,7 @@ Creating dynamo db and doing CRUD operations in it using SAM.
 - Create IAM User from AWS Console
 - Download SAM and setup it with IAM User credentials in local environment.
 - Giving DynamopDb and lambda permissions to IAM User.
-- Create lambda functions for operations in AWS S3 Dynamo Db.
+- Create lambda functions for operations in AWS Dynamo Db.
 - Deploying lambda functions through SAM Script.
 
 ##  About
