@@ -5,6 +5,17 @@ Globals:
     Timeout: 120
     Handler: index.handler
 Resources:
+  dynamoDbAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: dynamoDbAPI
+      StageName: v1
+      OpenApiVersion: 3.0.2
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: ..\..\swagger.yaml
   CreateDynamoDbFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -17,6 +28,14 @@ Resources:
     Properties:
       CodeUri: GetItemFunction
       Description: To fetch a item from DynamoDb table
+      Events:
+        Get:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: dynamoDbAPI
+            Path: /
+            Method: GET
     Metadata:
       SamResourceId: GetItemFunction
   PutItemFunction:
@@ -24,6 +43,14 @@ Resources:
     Properties:
       CodeUri: PutItemFunction
       Description: To add a item in DynamoDb table
+      Events:
+        Post:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: dynamoDbAPI
+            Path: /
+            Method: POST
     Metadata:
       SamResourceId: PutItemFunction
   UpdateItemFunction:
@@ -31,5 +58,13 @@ Resources:
     Properties:
       CodeUri: UpdateItemFunction
       Description: To update a item in DynamoDb table
+      Events:
+        Put:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: dynamoDbAPI
+            Path: /
+            Method: PUT
     Metadata:
       SamResourceId: UpdateItemFunction

@@ -1,8 +1,8 @@
-var AWS = require("aws-sdk");
-AWS.config.update({ region: "ap-south-1"});
-var client = new AWS.DynamoDB();
+
 exports.handler = async (event) => {
- 
+  var AWS = require("aws-sdk");
+  AWS.config.update({ region: "ap-south-1"});
+  var client = new AWS.DynamoDB();
  var params = {
       ExpressionAttributeNames: {
    "#Y": "Genre"

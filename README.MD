@@ -7,7 +7,9 @@ Creating dynamo db and doing CRUD operations in it using SAM.
 - Download SAM and setup it with IAM User credentials in local environment.
 - Giving DynamopDb and lambda permissions to IAM User.
 - Create lambda functions for operations in AWS Dynamo Db.
-- Deploying lambda functions through SAM Script.
+- Create swagger.yaml specification for API.
+- Creating api resourse and integrate it with lambda functions.
+- Deploying lambda functions & API Gatewaythrough SAM Script.
 
 ##  About
 

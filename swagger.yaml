@@ -1,0 +1,150 @@
+openapi: '3.0.2'
+info:
+  title: DynamoDb API
+  description: 'CRUD operations on aws dynamo db.'
+  version: '1.0'
+  contact:
+    email: 'yugal17v@gmail.com'
+paths:
+  /:
+    get:
+      tags:
+      -  Get Item from dynamoDb table
+      summary: 'It retrieves the specified item from specified dynamodb table.'
+      
+      responses: 
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  isBase64Encoded:
+                    type: boolean
+                  statusCode:
+                    type: integer
+                  headers:
+                    type: object
+                  body:
+                    type: string      
+                
+        404:
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Item Not Found
+                type: string
+      x-amazon-apigateway-integration:
+          
+          httpMethod: "POST"
+          uri:
+            Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetItemFunction.Arn}/invocations
+          responses:
+            default:
+              statusCode: "200"
+          passthroughBehavior: "when_no_match"
+          contentHandling: "CONVERT_TO_TEXT"  
+          type: "aws"        
+        
+    post:
+      tags: 
+      - Add Item in DynamoDb table
+      summary: 'It creates and add the item in specified table.'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tableName:
+                  type: string
+                key:
+                  type: string
+                body:
+                  type: string
+      responses:
+        200:
+          description: 'Item succesfully added in table'
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Item Not Found
+                type: string
+      x-amazon-apigateway-integration:
+            type: "aws"
+            httpMethod: "POST"
+            uri: 
+              Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PutItemFunction.Arn}/invocations
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"          
+    put:
+      tags:
+      -  Update the item in dynamodb
+      summary: 'It updates the specified Item from the dynamodb table.'
+      responses: 
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema: 
+                type: string
+        404:
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Item Not Found
+                type: string
+      x-amazon-apigateway-integration:
+        type: "aws"
+        httpMethod: "POST"
+        uri: 
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateItemFunction.Arn}/invocations
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"          
+    # delete:
+    #   tags:
+    #   -  Delete object from bucket
+    #   summary: 'It deletes the specified object from the bucket.'
+    #   responses: 
+    #     200:
+    #       description: Successful response
+    #       content:
+    #         application/json:
+    #           schema: 
+    #             type: string
+                
+    #     404:
+    #       description: Not Found
+    #       content:
+    #         text/plain:
+    #           schema:
+    #             title: Specified object Not Found
+    #             type: string     
+
+    #   x-amazon-apigateway-integration:
+    #     type: "aws"
+    #     httpMethod: "POST"
+    #     uri: 
+    #       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteS3ObjectFunction.Arn}/invocations
+    #     responses:
+    #       default:
+    #         statusCode: "200"
+    #     passthroughBehavior: "when_no_match"
+    #     contentHandling: "CONVERT_TO_TEXT"       
+        
